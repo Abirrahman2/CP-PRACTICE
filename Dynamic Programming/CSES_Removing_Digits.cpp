@@ -32,12 +32,25 @@ int main()
     int n;
     cin>>n;
     vector<int>digits=digit(n);
-    vector<int>dp(n+1,-1);
+    vector<int>dp(n+1,1e9);
+    //tabulation
+    dp[0]=0;
+    for(int i=1;i<=n;i++)
+    {
+        vector<int>digits=digit(i);
+        int mini=INT_MAX;
+        for(int j=0;j<digits.size();j++)
+        {
+              if(digits[j]==0)continue;
+              mini=min(mini,1+dp[i-digits[j]]);
+        }
+        dp[i]=mini;
+    }
 //    for(auto it:digits)
 //    {
 //        cout<<it<<" ";
 //    }
-    cout<<ways(n,dp)<<endl;
+    cout<<dp[n]<<endl;
 
 }
 
