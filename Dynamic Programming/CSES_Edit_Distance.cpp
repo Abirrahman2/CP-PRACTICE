@@ -34,8 +34,43 @@ int main()
        cin>>p;
        int n=s.size();
        int m=p.size();
-       vector<vector<int>>dp(n,vector<int>(m,-1));
-       cout<<fun(n-1,m-1,s,p,dp)<<endl;
+       //space optimization
+       //vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+       vector<int>prev(m+1,0);
+       //base case
+     /*  for(int i=0;i<=n;i++)
+       {
+           dp[i][0]=i;
+       }*/
+       for(int j=0;j<=m;j++)
+       {
+           prev[j]=j;
+       }
+       vector<int>cur(m+1,0);
+       for(int i=1;i<=n;i++)
+       {
+           cur[0]=i;
+           for(int j=1;j<=m;j++)
+           {
+               int mini=0;
+               if(s[i-1]==p[j-1])
+                {
+                  mini=0+prev[j-1];
+                }
+               else
+               {
+
+                int add=1+cur[j-1];
+                int rep=1+prev[j-1];
+                int del=1+prev[j];
+                 mini=min(add,min(rep,del));
+                }
+                cur[j]=mini;
+
+           }
+           prev=cur;
+       }
+       cout<<prev[m]<<endl;
     }
 }
 
